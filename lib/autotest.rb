@@ -164,7 +164,11 @@ class Autotest
     self.sleep             = 1
     self.testlib          = "test/unit"
     self.find_directories  = ['.']
-    self.unit_diff         = "unit_diff -u"
+    if (defined? RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
+      self.unit_diff         = "unit_diff"
+    else
+      self.unit_diff         = "unit_diff -u"
+    end
 
     self.add_mapping(/^lib\/.*\.rb$/) do |filename, _|
       possible = File.basename(filename).gsub '_', '_?'
